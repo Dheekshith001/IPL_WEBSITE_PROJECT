@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Points Table{% endblock %}
+
+{% block content %}
+    <title>Points Table</title>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .table-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    table {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        background-color: #ffffff;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333333;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+        font-size: 16px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    th {
+        background-color: #232124;
+        color: #ffffff;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f0f7ff;
+        transform: scale(1.02);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    tbody tr:nth-child(1),
+    tbody tr:nth-child(2),
+    tbody tr:nth-child(3),
+    tbody tr:nth-child(4) {
+        background-color: #064070;
+        color: #ffffff;
+    }
+
+    .win {
+        color: #28a745;
+        font-weight: bold;
+    }
+
+    .loss {
+        color: #dc3545;
+        font-weight: bold;
+    }
+
+    .qualified {
+        color: #28a745;
+        font-weight: bold;
+        margin-left: 5px;
+    }
+
+    .back {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .back a {
+        text-decoration: none;
+        color: #064070;
+        font-weight: bold;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 1024px) {
+        table {
+            width: 90%;
+        }
+
+        th, td {
+            padding: 10px;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        table {
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            font-size: 13px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        table {
+            width: 100%;
+        }
+
+        th, td {
+            padding: 6px;
+            font-size: 12px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        .back a {
+            font-size: 14px;
+        }
+    }
+</style>
+
+    <h1>Points Table</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Team</th>
+                    <th>Matches Played</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team, stats in points_table %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                        {{ team }}
+                        {% if stats['points'] >= 18 %}
+                        <span class="qualified">Q</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ stats['matches_played'] }}</td>
+                    <td class="win">{{ stats['wins'] }}</td>
+                    <td class="loss">{{ stats['losses'] }}</td>
+                    <td>{{ stats['points'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="back">
+        <a href="/">Back to Home</a>
+    </div>
+{% endblock %}

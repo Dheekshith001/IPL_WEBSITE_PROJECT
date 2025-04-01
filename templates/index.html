@@ -1,0 +1,424 @@
+{% extends "base.html" %}
+
+{% block title %}Add New IPL Player{% endblock %}
+
+{% block content %}
+<style>
+    /* General Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Header Styles */
+    header {
+        background-color: rgb(2, 2, 48);
+        color: #fff;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ipl-logo {
+        height: 50px;
+    }
+
+    nav ul {
+        list-style-type: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    nav ul li {
+        margin: 0;
+    }
+    #orangecap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1); /* Optional: Background for better visual separation */
+}
+
+#orangecap img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        padding: 5px 10px;
+        transition: background-color 0.3s;
+    }
+
+    nav ul li a:hover {
+        background-color: #f1c40f;
+        border-radius: 5px;
+    }
+
+    /* Hero Section */
+    .hero {
+        position: relative;
+        height: 550px;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .slider-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .slider {
+        display: flex;
+    }
+
+    .slider img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .prev,
+    .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 50%;
+        z-index: 10;
+    }
+
+    .prev:hover,
+    .next:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .prev {
+        left: 10px;
+    }
+
+    .next {
+        right: 10px;
+    }
+
+    /* Teams Section */
+    .team-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 25px;
+        gap: 15px; /* Add gap between rows */
+    }
+
+    .team {
+        background-color: #fff;
+        padding: 10px;
+        margin: 10px; /* Adjust margin to fit five teams in a row */
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        flex: 1 1 calc(20% - 20px); /* Adjust the width to fit five teams in a row */
+        transition: transform 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .team:hover {
+        transform: scale(1.05);
+    }
+
+    .team-logo {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+
+    .team p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .team::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .team:hover::before {
+        opacity: 1;
+    }
+
+    .team:hover p {
+        color: #fff;
+    }
+
+    /* Heading Styles */
+    .head {
+        text-align: center;
+        margin: 20px 0;
+        position: relative;
+    }
+
+    .head img {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: auto;
+    }
+
+    .head h1 {
+        font-size: 1.8rem;
+        color: white;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 2px;
+        margin-top: 20px;
+        background-color:#063970;
+    }
+    /* Responsive Styles */
+@media (max-width: 1200px) {
+    .team-container {
+        gap: 10px; /* Reduce gaps for smaller screens */
+    }
+
+    .team {
+        flex: 1 1 calc(25% - 20px); /* Fit four teams in a row */
+    }
+
+    .team-logo {
+        width: 80px;
+        height: 80px;
+    }
+
+    .team p {
+        font-size: 1rem;
+    }
+
+    .hero {
+        height: 400px;
+    }
+}
+
+@media (max-width: 992px) {
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .team {
+        flex: 1 1 calc(33.33% - 20px); /* Fit three teams in a row */
+    }
+
+    .hero {
+        height: 350px;
+    }
+
+    .slider img {
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        align-items: flex-start;
+    }
+
+    .hero {
+        height: 300px;
+    }
+
+    .team {
+        flex: 1 1 calc(50% - 20px); /* Fit two teams in a row */
+    }
+
+    .team-logo {
+        width: 70px;
+        height: 70px;
+    }
+
+    .team p {
+        font-size: 0.9rem;
+    }
+
+    .prev,
+    .next {
+        padding: 8px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        height: 250px;
+    }
+
+    .team {
+        flex: 1 1 100%; /* Fit one team per row */
+    }
+
+    .team-logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .team p {
+        font-size: 0.8rem;
+    }
+
+    #orangecap {
+        padding: 10px;
+    }
+
+    #orangecap img {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .team p {
+        font-size: 0.7rem;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+        padding: 3px 8px;
+    }
+
+    .prev,
+    .next {
+        padding: 6px;
+        font-size: 14px;
+    }
+}
+</style>
+
+<section class="hero">
+    <div class="slider-container">
+        <div class="slider">
+            <img src="https://wallpapercave.com/wp/wp4059913.jpg" alt="Image 1">
+            <img src="https://www.hindustantimes.com/ht-img/img/2023/04/04/1600x900/PTI04-03-2023-000319B-0_1680592093818_1680592093818_1680592116744_1680592116744.jpg" alt="Image 1">
+            <img src="https://wallpapercave.com/wp/wp4059913.jpg" alt="Image 2">
+            <img src="https://images.assettype.com/thequint/2019-05/728d36fa-cd1d-46c1-84e3-c9e7db878462/VRP_9406.jpg" alt="Image 3">
+            <img src="https://sportscheetah.com/wp-content/uploads/2023/12/IPL-2024_-Chennai-Super-Kings-CSK-Full-Squad-and-Complete-Players-List-After-The-Player-Auction.webp" alt="Image 4">
+        </div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+</section>
+
+<section class="text">
+    <div class="head">
+        <h1>Teams</h1>
+    </div>
+    <div class="team-container">
+        <div class="team" id="MI">
+            <img src="static/img/mi l.png" alt="MI Logo" class="team-logo">
+            <p>Mumbai Indians</p>
+        </div>
+        <div class="team" id="CSK">
+            <img src="static/img/csk1.png" alt="CSK Logo" class="team-logo">
+            <p>Chennai Super Kings</p>
+        </div>
+        <div class="team" id="RCB">
+            <img src="static/img/rcb-logo-new.png" alt="RCB Logo" class="team-logo">
+            <p>Royal Challengers Bangalore</p>
+        </div>
+        <div class="team" id="KKR">
+            <img src="static/img/kkr.png" alt="KKR Logo" class="team-logo">
+            <p>Kolkata Knight Riders</p>
+        </div>
+        <div class="team" id="RR">
+            <img src="static/img/rrr.png" alt="RR Logo" class="team-logo">
+            <p>Rajasthan Royals</p>
+        </div>
+        <div class="team" id="SRH">
+            <img src="static/img/srh2.png" alt="SRH Logo" class="team-logo">
+            <p>Sunrisers Hyderabad</p>
+        </div>
+        <div class="team" id="DC">
+            <img src="static/img/dc log.jpeg" alt="DC Logo" class="team-logo">
+            <p>Delhi Capitals</p>
+        </div>
+        <div class="team" id="PBKS">
+            <img src="static/img/pbks1.png" alt="PBKS Logo" class="team-logo">
+            <p>Punjab Kings</p>
+        </div>
+        <div class="team" id="GT">
+            <img src="static/img/gt.png" alt="GT Logo" class="team-logo">
+            <p>Gujarat Titans</p>
+        </div>
+        <div class="team" id="LSG">
+            <img src="static/img/lucknow.png" alt="LSG Logo" class="team-logo">
+            <p>Lucknow Super Giants</p>
+        </div>
+    </div>
+    <div id="orangecap">
+            <img src="static/img1/orangecap.png" alt="Orange Cap">
+        </div>
+</section>
+
+<script>
+    let slideIndex = 0;
+
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.slider img');
+        const totalSlides = slides.length;
+        if (index >= totalSlides) {
+            slideIndex = 0;
+        } else if (index < 0) {
+            slideIndex = totalSlides - 1;
+        } else {
+            slideIndex = index;
+        }
+        const offset = -slideIndex * 100;
+        document.querySelector('.slider').style.transform = `translateX(${offset}%)`;
+    }
+
+    function moveSlide(step) {
+        showSlide(slideIndex + step);
+    }
+
+    // Auto slide every 3 seconds
+    setInterval(() => {
+        moveSlide(1);
+    }, 5000);
+
+    // Initialize slider
+    showSlide(slideIndex);
+</script>
+
+{% endblock %}

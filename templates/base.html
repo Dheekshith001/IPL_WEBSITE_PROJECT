@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}IPL T20{% endblock %}</title>
+    <style>
+        /* Reset Styles */
+        body, ul {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #242729;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar Styles */
+        nav {
+            background-color: #12044E; /* IPL blue color */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        main {
+            margin-top: 75px; /* Adjust for navbar height */
+            min-height: calc(100vh - 60px);
+        }
+
+        /* Logo Section */
+        nav .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        nav .logo img {
+            height: 50px;
+        }
+
+        nav .logo span {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-left: 10px;
+        }
+
+        /* Navigation Menu */
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+
+        nav ul li a:hover {
+            color: #ffd700; /* Gold hover effect */
+        }
+
+        /* Social Links */
+        .social-icons {
+            margin-right: 35px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #ffd700;
+            transform: scale(1.1); /* Slight zoom effect */
+        }
+
+        .social-icons img {
+            height: 20px;
+            width: 20px;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #002a5c;
+            padding: 20px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            color: white;
+            border-top: 3px solid #fff;
+            border-bottom: 3px solid #fff;
+        }
+
+        .nav-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .nav-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffc107;
+            text-transform: uppercase;
+        }
+
+        .nav-logo {
+            height: 40px;
+            margin: 5px;
+            vertical-align: middle;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .copy {
+            text-align: center;
+            color: white;
+            background-color: black;
+            padding: 10px;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .social-icons {
+                margin-top: 10px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .social-icons a {
+                font-size: 14px;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            /* Footer - stack items for smaller screens */
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-item {
+                margin-bottom: 15px;
+            }
+
+            .nav-title {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul {
+                gap: 5px;
+            }
+
+            .social-icons {
+                gap: 8px;
+            }
+
+            .logo span {
+                font-size: 1.2rem;
+            }
+
+            .navbar {
+                padding: 15px 0;
+            }
+
+            .copy {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <nav>
+        <div class="logo">
+            <img src="static/img/ipl1 logo.jpeg" alt="IPL Logo">
+            <span>IPL T20</span>
+        </div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/matches">Matches</a></li>
+            <li><a href="/teams">Teams</a></li>
+            <li><a href="/players">Players</a></li>
+            <li><a href="/news">News</a></li>
+            <li><a href="/points_table">Points Table</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+        <div class="social-icons">
+            <p id="follow">Follow Us</p>
+            <a href="https://twitter.com/IPL" target="_blank">
+                <img src="static/img/twitter.png" alt="Twitter"> Twitter
+            </a>
+            <a href="https://facebook.com/IPL" target="_blank">
+                <img src="static/img/facebook.png" alt="Facebook"> Facebook
+            </a>
+            <a href="https://instagram.com/IPL" target="_blank">
+                <img src="static/img/instagram.png" alt="Instagram"> Instagram
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="navbar">
+            <div class="nav-item">
+                <p class="nav-title">TITLE SPONSOR</p>
+                <a href="https://www.tatamotors.com/" target="_blank"><img src="static/img/tata.png" alt="TATA Logo" class="nav-logo"></a>
+            </div>
+            <div class="nav-item">
+                <p class="nav-title">ASSOCIATE PARTNER</p>
+                <a href="https://www.my11circle.com/" target="_blank"><img src="static/img/my11circle.png" alt="My11Circle Logo" class="nav-logo"></a>
+                <a href="https://www.angelone.in/" target="_blank"><img src="static/img/angelone.png" alt="AngelOne Logo" class="nav-logo"></a>
+                <a href="https://www.rupay.co.in/" target="_blank"><img src="static/img/rupay.png" alt="RuPay Logo" class="nav-logo"></a>
+            </div>
+            <div class="nav-item">
+                <p class="nav-title">OFFICIAL UMPIRE PARTNER</p>
+                <a href="https://www.wondercement.com/" target="_blank"><img src="static/img/wondercement.png" alt="Wonder Cement Logo" class="nav-logo"></a>
+            </div>
+            <div class="nav-item">
+                <p class="nav-title">OFFICIAL STRATEGIC TIMEOUT PARTNER</p>
+                <a href="https://www.ceat.com/" target="_blank"><img src="static/img/ceat.png" alt="CEAT Logo" class="nav-logo"></a>
+            </div>
+            <div class="nav-item">
+                <p class="nav-title">OFFICIAL BROADCASTER</p>
+                <a href="https://www.hotstar.com/in/paywall" target="_blank"><img src="static/img/starsports.png" alt="Star Sports Logo" class="nav-logo"></a>
+            </div>
+            <div class="nav-item">
+                <p class="nav-title">OFFICIAL DIGITAL STREAMING PARTNER</p>
+                <a href="https://www.jiocinema.com/" target="_blank"><img src="static/img/jiocinema.png" alt="JioCinema Logo" class="nav-logo"></a>
+            </div>
+        </div>
+    </footer>
+    <div>
+        <p class="copy">&copy; 2024 IPL. All Rights Reserved.</p>
+    </div>
+</body>
+</html>

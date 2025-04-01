@@ -1,0 +1,358 @@
+{% extends "base.html" %}
+
+{% block title %}IPL Players{% endblock %}
+
+{% block content %}
+<style>
+    /* General Styles */
+    .body {
+        background-color: #bee0ec;
+        color: #333;
+        font-family: 'Arial', sans-serif;
+        padding: 1rem;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        overflow-x: auto;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    th, td {
+        padding: 1rem;
+        text-align: center;
+    }
+
+    th {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    td img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    /* Buttons */
+    button {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    /* Responsive Form */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    form input, form button {
+        width: 100%;
+        padding: 0.5rem;
+        border: 2px solid #007bff;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    form label {
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+
+    /* Responsiveness for Small Screens */
+    @media (max-width: 768px) {
+        h1, h2 {
+            font-size: 1.5rem;
+        }
+
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.5rem;
+        }
+
+        th {
+            display: none;
+        }
+
+        td {
+            border-bottom: 1px solid #ddd;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50%;
+            white-space: nowrap;
+            font-weight: bold;
+        }
+
+        td:nth-of-type(1):before { content: "Player ID"; }
+        td:nth-of-type(2):before { content: "Name"; }
+        td:nth-of-type(3):before { content: "Image"; }
+        td:nth-of-type(4):before { content: "Team"; }
+        td:nth-of-type(5):before { content: "Matches Played"; }
+        td:nth-of-type(6):before { content: "Runs Scored"; }
+        td:nth-of-type(7):before { content: "Wickets Taken"; }
+        td:nth-of-type(8):before { content: "Actions"; }
+
+        td img {
+            width: 50%;
+        }
+
+        form {
+            padding: 1rem;
+        }
+
+        #editModal {
+            width: 90%;
+            margin: 1rem auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    /* Responsiveness for Very Small Screens */
+    @media (max-width: 480px) {
+        h1, h2 {
+            font-size: 1.25rem;
+        }
+
+        form input, form button {
+            padding: 0.25rem;
+        }
+
+        button {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+        }
+    }
+</style>
+
+
+<div class="body">
+    <h1 style="text-align: center; color: #333; font-size: 2.5rem; margin-bottom: 2rem;">IPL Players</h1>
+
+    <!-- Add Player Form -->
+    <h2 style="text-align: center; color: #007bff; margin-bottom: 1rem;">Add New Player</h2>
+    <div style="max-width: 600px; margin: 0 auto; background: #ffffff; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; padding: 1rem; overflow-x: auto;">
+        <form id="addPlayerForm" action="/submit" method="post">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color: #007bff; color: #ffffff;">
+                        <th colspan="2" style="padding: 1rem; text-align: center; border-radius: 10px 10px 0 0; color: black;">Add Player Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 0.5rem; width: 35%; color: #272429;">Player ID:</td>
+                        <td style="padding: 0.5rem;"><input type="number" id="player_id" name="player_id" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; box-sizing: border-box;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Player Name:</td>
+                        <td style="padding: 0.5rem;"><input type="text" id="player_name" name="player_name" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; box-sizing: border-box;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Team:</td>
+                        <td style="padding: 0.5rem;"><input type="text" id="team" name="team" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; box-sizing: border-box;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Matches Played:</td>
+                        <td style="padding: 0.5rem;"><input type="number" id="matches_played" name="matches_played" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; box-sizing: border-box;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Runs Scored:</td>
+                        <td style="padding: 0.5rem;"><input type="number" id="runs_scored" name="runs_scored" style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; box-sizing: border-box;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Wickets Taken:</td>
+                        <td style="padding: 0.5rem;"><input type="number" id="wickets_taken" name="wickets_taken" style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; box-sizing: border-box;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Image:</td>
+                        <td style="padding: 0.5rem;"><input type="text" id="image" name="image" style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; box-sizing: border-box;"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center; padding: 1rem;">
+                            <button type="submit" style="padding: 0.5rem 1rem; background-color: #007bff; color: #fff; border: none; border-radius: 50px; cursor: pointer; font-size: 0.875rem; box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); transition: all 0.3s ease-in-out;">Add Player</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <hr style="border-top: 2px solid #007bff; margin: 2rem 0;">
+
+    <!-- Players Table -->
+    <h2 style="text-align: center; color: #007bff; margin-bottom: 1rem;">Players List</h2>
+    <div style="overflow-x:auto;">
+        <table border="1" style="width: 100%; border-collapse: collapse; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+            <thead>
+                <tr style="background-color: #007bff; color: #ffffff;">
+                    <th style="padding: 1rem; color: #272429;">Player ID</th>
+                    <th style="padding: 1rem; color: #272429;">Name</th>
+                    <th style="padding: 1rem; color: #272429;">Image</th>
+                    <th style="padding: 1rem; color: #272429;">Team</th>
+                    <th style="padding: 1rem; color: #272429;">Matches Played</th>
+                    <th style="padding: 1rem; color: #272429;">Runs Scored</th>
+                    <th style="padding: 1rem; color: #272429;">Wickets Taken</th>
+                    <th style="padding: 1rem; color: #272429;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in players %}
+                <tr id="player-{{ player.player_id }}" style="transition: all 0.3s ease-in-out;">
+                    <td style="padding: 1rem;">{{ player.player_id }}</td>
+                    <td style="padding: 1rem;">{{ player.player_name }}</td>
+                    <td style="padding: 1rem;">
+                        <img src="{{ url_for('static', filename='img1/' ~ player.image) }}" alt="Player Image" style="width: 100px; height: 100px; padding-left:50px;">
+                    </td>
+                    <td style="padding: 1rem;">{{ player.team }}</td>
+                    <td style="padding: 1rem;">{{ player.matches_played }}</td>
+                    <td style="padding: 1rem;">{{ player.runs_scored or 'N/A' }}</td>
+                    <td style="padding: 1rem;">{{ player.wickets_taken or 'N/A' }}</td>
+                    <td style="padding: 1rem;">
+                        <button onclick="openEditModal({{ player.player_id }}, '{{ player.player_name }}', '{{ player.team }}', {{ player.matches_played }}, {{ player.runs_scored or 0 }}, {{ player.wickets_taken or 0 }}, '{{ player.image }}')" style="padding: 0.5rem 1rem; background-color: #28a745; color: #fff; border: none; border-radius: 4px; cursor: pointer; margin-right: 0.5rem; transition: background-color 0.3s;">Edit</button>
+                        <button onclick="deletePlayer({{ player.player_id }})" style="padding: 0.5rem 1rem; background-color: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit Player Modal -->
+    <div id="editModal" style="display: none; border: 1px solid #ddd; border-radius: 10px; background: #f9f9f9; padding: 1rem; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);">
+        <h2>Edit Player</h2>
+        <form id="editPlayerForm" onsubmit="updatePlayer(); return false;">
+            <input type="hidden" id="edit_player_id" name="player_id">
+            <label for="edit_player_name">Player Name:</label>
+            <input type="text" id="edit_player_name" name="player_name" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; margin-bottom: 1rem;"><br>
+
+            <label for="edit_team">Team:</label>
+            <input type="text" id="edit_team" name="team" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; margin-bottom: 1rem;"><br>
+
+            <label for="edit_matches_played">Matches Played:</label>
+            <input type="number" id="edit_matches_played" name="matches_played" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; margin-bottom: 1rem;"><br>
+
+            <label for="edit_runs_scored">Runs Scored:</label>
+            <input type="number" id="edit_runs_scored" name="runs_scored" style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; margin-bottom: 1rem;"><br>
+
+            <label for="edit_wickets_taken">Wickets Taken:</label>
+            <input type="number" id="edit_wickets_taken" name="wickets_taken" style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; margin-bottom: 1rem;"><br>
+
+            <label for="edit_image">Image:</label>
+            <input type="text" id="edit_image" name="image" style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem; margin-bottom: 1rem;"><br>
+
+            <button type="submit" style="padding: 0.5rem 1rem; background-color: #28a745; color: #fff; border: none; border-radius: 4px; cursor: pointer; margin-right: 0.5rem; transition: background-color 0.3s;">Update</button>
+            <button type="button" onclick="closeEditModal()" style="padding: 0.5rem 1rem; background-color: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    function openEditModal(playerId, playerName, team, matchesPlayed, runsScored, wicketsTaken, image) {
+        document.getElementById('editModal').style.display = 'block';
+        document.getElementById('edit_player_id').value = playerId;
+        document.getElementById('edit_player_name').value = playerName;
+        document.getElementById('edit_team').value = team;
+        document.getElementById('edit_matches_played').value = matchesPlayed;
+        document.getElementById('edit_runs_scored').value = runsScored;
+        document.getElementById('edit_wickets_taken').value = wicketsTaken;
+        document.getElementById('edit_image').value = image;
+    }
+
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    function updatePlayer() {
+        const playerId = document.getElementById('edit_player_id').value;
+        const playerName = document.getElementById('edit_player_name').value;
+        const team = document.getElementById('edit_team').value;
+        const matchesPlayed = document.getElementById('edit_matches_played').value;
+        const runsScored = document.getElementById('edit_runs_scored').value;
+        const wicketsTaken = document.getElementById('edit_wickets_taken').value;
+        const image = document.getElementById('edit_image').value;
+
+        if (!playerName || !team || !matchesPlayed) {
+            alert('Please fill out all required fields.');
+            return;
+        }
+
+        fetch('/update/' + playerId, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                player_name: playerName,
+                team: team,
+                matches_played: parseInt(matchesPlayed),
+                runs_scored: parseInt(runsScored),
+                wickets_taken: parseInt(wicketsTaken),
+                image: image
+            }),
+        })
+        .then(response => {
+            if (response.ok) {
+                document.querySelector(`#player-${playerId} td:nth-child(2)`).textContent = playerName;
+                document.querySelector(`#player-${playerId} td:nth-child(3) img`).src = `/static/img1/${image}`;
+                document.querySelector(`#player-${playerId} td:nth-child(4)`).textContent = team;
+                document.querySelector(`#player-${playerId} td:nth-child(5)`).textContent = matchesPlayed;
+                document.querySelector(`#player-${playerId} td:nth-child(6)`).textContent = runsScored || 'N/A';
+                document.querySelector(`#player-${playerId} td:nth-child(7)`).textContent = wicketsTaken || 'N/A';
+                alert('Player updated successfully!');
+                closeEditModal();
+            } else {
+                alert('Error: Could not update player.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while updating the player.');
+        });
+    }
+
+    function deletePlayer(playerId) {
+        if (confirm('Are you sure you want to delete this player?')) {
+            fetch('/delete/' + playerId, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('player-' + playerId).remove();
+                    alert('Player deleted successfully!');
+                } else {
+                    alert('Error: Could not delete player');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the player');
+            });
+        }
+    }
+
+</script>
+{% endblock %}

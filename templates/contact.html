@@ -1,0 +1,323 @@
+
+{% extends "base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+           <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background: url('https://img.freepik.com/free-vector/stadium-lights-effect-with-mist_52683-30565.jpg?t=st=1733549176~exp=1733552776~hmac=f4b5a9b7406a4949f2c25a4530f3f23d1d40378e7c9a6433c98a063ca4a76a09&w=996') no-repeat center center fixed;
+                background-size: cover;
+            }
+
+            .container {
+                width: 90%;
+                max-width: 800px;
+                margin: 50px auto;
+                padding: 20px;
+                background: #081033;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+
+            h1 {
+                text-align: center;
+                color: white;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                background-color: #1E2A47;
+                color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            label {
+                font-weight: bold;
+            }
+
+            input, textarea, button {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+
+            button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+            .error {
+                color: red;
+                font-size: 14px;
+            }
+
+            .contact-card {
+                border: 1px solid #ddd;
+                padding: 25px;
+                width: 100%;
+                max-width: 600px;
+                font-family: Arial, sans-serif;
+                margin: 20px auto;
+                background-color: #2A3D71;
+                color: white;
+                border-radius: 10px;
+            }
+
+            .contact-card h2 {
+                text-align: center;
+                color: #fff;
+            }
+
+            .contact-card p {
+                font-size: 14px;
+                color: #ddd;
+            }
+
+            .contact-card ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            .contact-card ul li {
+                font-size: 14px;
+                color: #ddd;
+            }
+
+            #mobile-app {
+                font-family: Arial, sans-serif;
+                background-color: #0c1a2b;
+                color: white;
+                margin: 0;
+                padding: 0;
+            }
+
+            .app-promo-container {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                background-color: rgba(0, 0, 255, 0.4);
+                padding: 40px;
+                border-radius: 10px;
+                max-width: 1200px;
+                margin: 40px auto;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .app-promo-text {
+                flex: 1;
+                padding-right: 20px;
+                margin-bottom: 20px;
+            }
+
+            .app-promo-text h2 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            .app-promo-text p {
+                margin-bottom: 20px;
+                font-size: 1.2em;
+            }
+
+            .download-text {
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .app-buttons {
+                display: flex;
+                gap: 10px;
+            }
+
+            .app-store-badge {
+                width: 150px;
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
+
+            .app-store-badge:hover {
+                transform: scale(1.1);
+            }
+
+            .app-promo-image {
+                flex: 1;
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .app-promo-image img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 10px;
+            }
+
+            @media (max-width: 768px) {
+                .app-promo-container {
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                .app-promo-text {
+                    padding-right: 0;
+                }
+
+                .app-buttons {
+                    justify-content: center;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .container, .contact-card {
+                    width: 95%;
+                }
+
+                h1 {
+                    font-size: 1.5em;
+                }
+
+                .app-promo-text h2 {
+                    font-size: 1.5em;
+                }
+            }
+        </style>
+
+
+    <header>
+        <div class="logo">
+            <!-- Add your logo here if needed -->
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Contact Us</h1>
+
+        <div class="contact-card">
+            <h2>Our Office</h2>
+            <p><strong>Address:</strong></p>
+            <p>BCCI-IPL 4th Floor, Cricket Centre. Wankhede Stadium 'D' Road, Churchgate Mumbai - 400020 India</p>
+
+            <p><strong>Contact Numbers:</strong></p>
+            <ul>
+                <li>+91 22 67598800</li>
+                <li>+91 22 61580300</li>
+            </ul>
+        </div>
+
+        <form id="contactForm">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                <div id="nameError" class="error"></div>
+            </div>
+
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <div id="emailError" class="error"></div>
+            </div>
+
+            <div>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" placeholder="Your message" required></textarea>
+                <div id="messageError" class="error"></div>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+<div id="mobile-app">
+          <div class="app-promo-container">
+        <div class="app-promo-text">
+            <h2>Get the official IPL App</h2>
+            <p>Get the latest scores on the go. Find the latest content, including match highlights, press conferences and recap all at your fingertips by downloading the official IPL app.</p>
+            <p>Available on both App store and Playstore.</p>
+            <p class="download-text">Download here for free.</p>
+            <div class="app-buttons">
+              <a href="https://play.google.com/store/apps/details?id=com.pulselive.bcci.android&hl=en-IN" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" class="app-store-badge">
+</a>
+
+              <a href="https://apps.apple.com/in/app/ipl/id509837419?platform=iphone" target="_main"><img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-preferred_2x.png" alt="App Store" class="app-store-badge"></a>
+            </div>
+        </div>
+        <div class="app-promo-image">
+            <img src="https://documents.iplt20.com//ipl/assets/images/new-hand-mobile.png" alt="IPL App on Phone">
+        </div>
+    </div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Clear previous errors
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('messageError').textContent = '';
+
+            let isValid = true;
+
+            // Validate name
+            const name = document.getElementById('name').value.trim();
+            if (name === '') {
+                document.getElementById('nameError').textContent = 'Name is required.';
+                isValid = false;
+            }
+
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === '' || !emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = 'Valid email is required.';
+                isValid = false;
+            }
+
+            // Validate message
+            const message = document.getElementById('message').value.trim();
+            if (message === '') {
+                document.getElementById('messageError').textContent = 'Message is required.';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Create a FormData object to send form data via AJAX
+                const formData = new FormData(document.getElementById('contactForm'));
+
+                fetch('/contact', {  // Updated route to match Flask route
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert(data.message);
+                        document.getElementById('contactForm').reset();
+                    } else {
+                        alert('An error occurred: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred.');
+                });
+            }
+        });
+    </script>
+{% endblock %}

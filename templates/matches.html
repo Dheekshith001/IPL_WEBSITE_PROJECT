@@ -1,0 +1,289 @@
+{% extends "base.html" %}
+
+{% block title %}IPL Matches{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00008b;
+            font-size: 3rem;
+            margin-bottom: 30px;
+        }
+
+        .matches-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .match-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            padding: 15px;
+        }
+
+        .match-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .match-status {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .match-venue, .match-id, .match-season, .match-city, .match-date, .toss-info, .win-info, .umpires {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .match-details {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .team img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 5px;
+        }
+
+        .team-name {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .score {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .match-centre {
+            background-color: #ff4d4d;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 20px;
+            padding: 5px 10px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .video-glimpse video {
+            width: 600px;
+            height: 250px;
+        }
+
+        .vs {
+            padding-left: 20px;
+            padding-right: 20px;
+            font-weight: 600;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .match-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .match-details {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .vs {
+                margin: 10px 0;
+            }
+
+            .match-info {
+                margin-left: 0;
+            }
+
+            .video-glimpse video {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        @media (max-width: 992px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .team img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .score {
+                font-size: 1rem;
+            }
+
+            .match-card {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .match-card {
+                width: 100%;
+            }
+
+            .match-info {
+                font-size: 0.9rem;
+            }
+
+            .team img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .match-info {
+                font-size: 0.8rem;
+            }
+
+            .score {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .matches-container {
+                gap: 15px;
+            }
+
+            .team img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .vs {
+                padding: 10px;
+            }
+
+            .match-status, .match-venue, .match-id, .match-season, .match-city, .match-date, .toss-info, .win-info, .umpires {
+                font-size: 0.7rem;
+            }
+
+            .video-glimpse video {
+                width: 100%;
+                height: auto;
+            }
+
+            .match-info {
+                font-size: 0.8rem;
+            }
+
+            .score {
+                font-size: 1rem;
+            }
+        }
+    </style>
+
+    <h1>IPL Matches</h1>
+
+    <div class="matches-container">
+        {% for match in matches %}
+        <div class="match-card">
+            <div class="match-details">
+                <!-- Team 1 Logo and Score -->
+                <div class="team">
+                    <img src="{{ url_for('static', filename='img/' ~ match.team1logo) }}" alt="{{ match.team1 }} Logo">
+                    <div class="team-name"><strong>{{ match.team1 }}</strong></div>
+                    <div class="score">{{ match.team1_score }}</div>
+                </div>
+
+                <div class="vs"> vs </div>
+
+                <!-- Team 2 Logo and Score -->
+                <div class="team">
+                    <img src="{{ url_for('static', filename='img/' ~ match.team2logo) }}" alt="{{ match.team2 }} Logo">
+                    <div class="team-name">{{ match.team2 }}</div>
+                    <div class="score">{{ match.team2_score }}</div>
+                </div>
+            </div>
+
+            <div class="match-info">
+                <div class="match-season">
+                    <strong>Season:</strong> {{ match.season }}
+                </div>
+                <div class="match-city">
+                    <strong>City:</strong> {{ match.city }}
+                </div>
+                <div class="match-date">
+                    <strong>Date:</strong> {{ match.date }}
+                </div>
+                <div class="toss-info">
+                    <strong>Toss Winner:</strong> {{ match.toss_winner }} | <strong>Toss Decision:</strong> {{ match.toss_decision }}
+                </div>
+                <div class="match-status">
+                    <strong>Match Winner:</strong> {{ match.match_winner }} |
+                    {% if match.win_by_runs and match.win_by_runs != "0" %}
+                    <strong>Win By:</strong> {{ match.win_by_runs }} Runs
+                    {% elif match.win_by_wickets and match.win_by_wickets != "0" %}
+                    <strong>Win By:</strong> {{ match.win_by_wickets }} Wickets
+                    {% else %}
+                    <strong>Result:</strong> Tie
+                    {% endif %}
+                </div>
+                <div class="player-of-the-match">
+                    <strong>Player of the Match:</strong> {{ match.player_of_match }}
+                </div>
+                <div class="umpires">
+                    <strong>Umpires:</strong> {{ match.umpire1 }} and {{ match.umpire2 }}
+                </div>
+            </div>
+
+            <div class="video-glimpse">
+                <!-- Dynamically load the video for each match -->
+                <video controls autoplay muted>
+                    <source src="{{ url_for('static', filename='video/' ~ match.video_file) }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
