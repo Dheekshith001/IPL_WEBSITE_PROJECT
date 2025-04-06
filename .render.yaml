@@ -1,7 +1,9 @@
- services:
+services:
   - type: web
     name: my-flask-app
-    env: docker
+    env: python
     plan: free
     branch: main
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
     autoDeploy: false
